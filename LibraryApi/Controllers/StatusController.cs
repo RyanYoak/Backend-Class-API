@@ -32,6 +32,29 @@ namespace LibraryApi.Controllers
         {
             return Ok($"Getting info about blogs at {day}/{month}/{year}");
         }
+
+        [HttpGet("employees")]
+        public ActionResult GetEmployees([FromQuery] string department = "All")
+        {
+            var response = new GetEmployeesResponse
+            {
+                Data = new List<string> { "joe", "mary", "sue" },
+                Department = department
+            };
+            return Ok(response);
+        }
+
+        [HttpGet("whoami")]
+        public ActionResult WhoAmI([FromHeader(Name = "User-Agent")] string userAgent)
+        {
+            return Ok($"I am {userAgent}");
+        }
+
+        [HttpPost("employee")]
+        public ActionResult Hire([FromBody] Employee request)
+        {
+            return Ok($"Hiring {request.Name} in {request.Department} for {request.StartingSalary}.");
+        }
     }
 
     public class StatusResponse
@@ -40,5 +63,16 @@ namespace LibraryApi.Controllers
         public DateTime LastChecked { get; set; }
     }
 
+    public class GetEmployeesResponse
+    {
+        public List<string> Data { get; set; }
+        public string Department { get; set; }
+    }
 
+    public class Employee
+    {
+        public string Name { get; set; }
+        public string Department { get; set; }
+        public decimal StartingSalary { get; set; }
+    }
 }
