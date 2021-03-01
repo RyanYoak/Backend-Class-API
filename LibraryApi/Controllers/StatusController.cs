@@ -53,7 +53,7 @@ namespace LibraryApi.Controllers
         [HttpPost("employee")]
         public ActionResult Hire([FromBody] Employee request)
         {
-            return Ok($"Hiring {request.Name} in {request.Department} for {request.StartingSalary}.");
+            return Ok($"Hiring {request.Name} in {request.Department} for {request.StartingSalary:c}.");
         }
     }
 
