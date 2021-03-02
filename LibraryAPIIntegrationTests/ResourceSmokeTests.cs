@@ -15,7 +15,7 @@ namespace LibraryApiIntegrationTests
 
         [Theory]
         [InlineData("status")]
-        [InlineData("customers/42")]
+        [InlineData("cutomers/42")]
         [InlineData("blogs/2021/3/01")]
         public async Task ResourcesAreAliveAndKicking(string resource)
         {

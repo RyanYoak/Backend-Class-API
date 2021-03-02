@@ -30,5 +30,23 @@ namespace LibraryAPIIntegrationTests
             var response = await _client.GetAsync("/status");
             Assert.Equal("application/json", response.Content.Headers.ContentType.MediaType);
         }
+
+        [Fact]
+        public async Task HasCorrectResprsentation()
+        {
+            var response = await _client.GetAsync("/status");
+            var representation = await response.Content.ReadAsAsync<GetStatusResponse>();
+            Assert.Equal("Ryan was here", representation.message);
+            Assert.Equal(new DateTime(1969, 4, 20, 23, 59, 00), representation.lastChecked);
+        }
+
     }
+
+
+    public class GetStatusResponse
+    {
+        public string message { get; set; }
+        public DateTime lastChecked { get; set; }
+    }
+
 }
