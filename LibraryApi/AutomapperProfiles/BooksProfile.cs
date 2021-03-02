@@ -13,6 +13,10 @@ namespace LibraryApi.AutomapperProfiles
         public BooksProfile()
         {
             CreateMap<Book, GetBookDetailsResponse>();
+            CreateMap<Book, BookSummaryItem>();
+            CreateMap<PostBookRequst, Book>()
+                .ForMember(dest => dest.AddedToInventory, cfg => cfg.MapFrom(_ => DateTime.Now))
+                .ForMember(dest => dest.IsAvailiable, cfg => cfg.MapFrom(_ => true));
         }
     }
 }
