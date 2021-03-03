@@ -13,5 +13,11 @@ namespace LibraryApi.Domain
 
         }
         public DbSet<Book> Books { get; set; }
+
+        public IQueryable<Book> AvailiableBooks { 
+            get{
+                return Books.Where(b => b.IsAvailiable);
+            } 
+        }
     }
 }

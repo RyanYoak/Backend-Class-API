@@ -32,10 +32,23 @@ namespace LibraryApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+            });
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "LibraryApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Library Api", 
+                    Version = "v1", 
+                    Contact = new OpenApiContact{
+                        Name = "Ryan Yoak",
+                        Email = "ryan_yoak@progressive.com"
+                    },
+                    Description = "This is an API for my BES 100 course."
+                    });
+                //var xmlFile = $"{AssemblyLoadEventArgs.GetExecutingAssembly().GetName().Name}.xml";
+                //var xmlPath = ConfigurationPath.Combine(AppContext.BaseDirectory, xmlFile);
+                //c.IncludeXmlComments(xmlPath);
             });
 
             services.AddTransient<ILookupServerStatus, HealthCheckServerStatus>();
@@ -59,9 +72,11 @@ namespace LibraryApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint(" / swagger/v1/swagger.json", "LibraryApi v1"));
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "LibraryApi v1"));
 
             app.UseRouting();
 
