@@ -40,7 +40,7 @@ namespace LibraryApi
 
             services.AddTransient<ILookupServerStatus, HealthCheckServerStatus>();
             services.AddDbContext<LibraryDataContext>(options => {
-                options.UseSqlServer(@"server=.\sqlexpress;database=library_dev;integrated security=true");
+                options.UseSqlServer(Configuration.GetConnectionString("Library"));
             });
 
             var mapperConfig = new MapperConfiguration(options => {
